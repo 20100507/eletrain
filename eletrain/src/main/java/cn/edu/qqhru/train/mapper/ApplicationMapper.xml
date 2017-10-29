@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.qqhru.train.mapper.ApplicationMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.qqhru.train.pojo.Application" >
+    <id column="application_id" property="applicationId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="apply_date" property="applyDate" jdbcType="TIMESTAMP" />
+    <result column="plan_id" property="planId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="pd_id" property="pdId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    application_id, title, user_id, apply_date, plan_id, status, pd_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.qqhru.train.pojo.ApplicationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from application
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from application
+    where application_id = #{applicationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from application
+    where application_id = #{applicationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.qqhru.train.pojo.ApplicationExample" >
+    delete from application
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="applicationId" useGeneratedKeys="true" parameterType="cn.edu.qqhru.train.pojo.Application" >
+    insert into application (application_id, title, user_id, 
+      apply_date, plan_id, status, 
+      pd_id)
+    values (#{applicationId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{applyDate,jdbcType=TIMESTAMP}, #{planId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{pdId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.qqhru.train.pojo.Application" >
+    insert into application
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="applicationId != null" >
+        application_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="applyDate != null" >
+        apply_date,
+      </if>
+      <if test="planId != null" >
+        plan_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="pdId != null" >
+        pd_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="applicationId != null" >
+        #{applicationId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="applyDate != null" >
+        #{applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="pdId != null" >
+        #{pdId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.qqhru.train.pojo.ApplicationExample" resultType="java.lang.Integer" >
+    select count(*) from application
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update application
+    <set >
+      <if test="record.applicationId != null" >
+        application_id = #{record.applicationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyDate != null" >
+        apply_date = #{record.applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planId != null" >
+        plan_id = #{record.planId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdId != null" >
+        pd_id = #{record.pdId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update application
+    set application_id = #{record.applicationId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      apply_date = #{record.applyDate,jdbcType=TIMESTAMP},
+      plan_id = #{record.planId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      pd_id = #{record.pdId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.qqhru.train.pojo.Application" >
+    update application
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="applyDate != null" >
+        apply_date = #{applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planId != null" >
+        plan_id = #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="pdId != null" >
+        pd_id = #{pdId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where application_id = #{applicationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.qqhru.train.pojo.Application" >
+    update application
+    set title = #{title,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      apply_date = #{applyDate,jdbcType=TIMESTAMP},
+      plan_id = #{planId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      pd_id = #{pdId,jdbcType=VARCHAR}
+    where application_id = #{applicationId,jdbcType=INTEGER}
+  </update>
+</mapper>

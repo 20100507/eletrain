@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.qqhru.train.mapper.LogStatisticsMapper">
+	<resultMap id="LogStatisticsBean" type="cn.edu.qqhru.train.vo.LogStatisticsVo">
+		<result column="hours" property="hours" jdbcType="INTEGER" />
+		<result column="login_count" property="loginCount" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="getLogStatisticsByHour" resultMap="LogStatisticsBean" >
+		SELECT
+		log1.logintime `hours`,
+		IFNULL(log2.login_count, 0) `login_count`
+		FROM
+		logtime AS log1
+		LEFT JOIN (
+		SELECT
+		hour (logintime) AS `login_time`,
+		count(hour(logintime)) AS
+		`login_count`
+		FROM
+		log
+		GROUP BY
+		hour(logintime)
+		) AS log2 ON log1.logintime = log2.login_time;
+	</select>
+</mapper>

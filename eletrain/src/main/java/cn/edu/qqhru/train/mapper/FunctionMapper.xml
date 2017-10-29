@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.qqhru.train.mapper.FunctionMapper">
+	<resultMap id="FunctionBeanMap" type="cn.edu.qqhru.train.vo.FunctionBean">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="page" property="page" jdbcType="VARCHAR" />
+		<result column="pid" property="pid" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="getFunctionBeanById" resultMap="FunctionBeanMap"
+		parameterType="String">
+		SELECT DISTINCT a1.name,a1.code,a1.description,
+		a1.page,a1.generatemenu,a1.zindex,a1.pid FROM auth_function a1
+		INNER JOIN auth_function a2 ON a1.pid = #{id} ORDER BY zindex
+	</select>
+
+	<select id="getParFunctionBeanByCode" resultMap="FunctionBeanMap"
+		parameterType="String">
+		SELECT * FROM auth_function WHERE page ="" AND code = #{code}
+	</select>
+</mapper>
